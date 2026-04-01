@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ComparaIA — ¿Qué inteligencia artificial necesitas hoy?</title>
+  <meta name="description" content="Compara las mejores herramientas de inteligencia artificial: ChatGPT, Claude, Gemini, Perplexity y más. Precios, características y valoraciones actualizadas." />
+  <meta property="og:title" content="ComparaIA — El comparador definitivo de IAs" />
+  <meta property="og:description" content="Encuentra la IA perfecta para tu caso de uso. Comparativa actualizada con precios y valoraciones." />
+  <meta property="og:image" content="https://placehold.co/1200x630/0a0a0a/faff00?text=ComparaIA" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* =====================
+       CSS VARIABLES & RESET
+    ===================== */
+    :root {
+      --bg: #080808;
+      --bg2: #111111;
+      --bg3: #181818;
+      --accent: #faff00;
+      --accent2: #00f5d4;
+      --text: #f0f0f0;
+      --muted: #888;
+      --border: #222;
+      --card-bg: #121212;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --radius: 12px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* =====================
+       NOISE TEXTURE OVERLAY
+    ===================== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* =====================
+       ANIMATIONS
+    ===================== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse-badge {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(250,255,0,0.4); }
+      50%       { box-shadow: 0 0 0 10px rgba(250,255,0,0); }
+    }
+    @keyframes scanline {
+      0%   { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; } 50% { opacity: 0; }
+    }
+
+    .fade-up { opacity: 0; animation: fadeUp 0.7s ease forwards; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.35s; }
+    .delay-4 { animation-delay: 0.5s; }
+    .delay-5 { animation-delay: 0.65s; }
+
+    /* =====================
+       NAV
+    ===================== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6vw;
+      height: 64px;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+    .nav-logo span { color: var(--text); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 4px;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .nav-cta:hover { background: #fff; transform: translateY(-1px); }
+
+    /* =====================
+       HERO
+    ===================== */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 6vw 60px;
+      overflow: hidden;
+    }
+
+    /* Gradient mesh background */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 30%, rgba(250,255,0,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 70%, rgba(0,245,212,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Scanline effect */
+    .hero-scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: scanline 4s linear infinite;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(250,255,0,0.08);
+      border: 1px solid rgba(250,255,0,0.2);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: blink 1.4s infinite;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 .accent { color: var(--accent); }
+    .hero h1 .accent2 { color: var(--accent2); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 44px;
+      font-weight: 300;
+    }
+
+    /* Filter pills */
+    .filter-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .filter-btn {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      padding: 9px 20px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* =====================
+       SECTION COMMON
+    ===================== */
+    section {
+      padding: 80px 6vw;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 48px;
+    }
+
+    /* =====================
+       CATEGORY CARDS
+    ===================== */
+    .categories { background: var(--bg2); }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    /* Each card is shown/hidden by JS filters */
+    .ai-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      cursor: pointer;
+    }
+    .ai-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .ai-card:hover { transform: translateY(-6px); border-color: #333; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .ai-card:hover::before { transform: scaleX(1); }
+
+    .card-emoji { font-size: 2rem; margin-bottom: 14px; }
+    .card-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .card-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 12px;
+    }
+    .card-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.5; margin-bottom: 20px; }
+
+    .card-price {
+      display: inline-block;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(250,255,0,0.08);
+      border: 1px solid rgba(250,255,0,0.2);
+      color: var(--accent);
+    }
+    .card-stars { margin-top: 14px; font-size: 0.85rem; color: #f5a623; letter-spacing: 2px; }
+
+    .card-link {
+      display: block;
+      margin-top: 18px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent2);
+      transition: color var(--transition);
+    }
+    .card-link:hover { color: var(--accent); }
+
+    /* hidden by filter */
+    .ai-card.hidden { display: none; }
+
+    /* =====================
+       COMPARISON TABLE
+    ===================== */
+    .comparison { background: var(--bg); }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    thead tr {
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid #1a1a1a;
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .td-name { font-weight: 700; }
+    .td-price { color: var(--accent); font-weight: 600; }
+    .td-yes { color: var(--accent2); font-weight: 600; }
+    .td-no  { color: #555; }
+    .td-stars { color: #f5a623; }
+
+    .td-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: rgba(0,245,212,0.1);
+      color: var(--accent2);
+      border: 1px solid rgba(0,245,212,0.2);
+    }
+
+    /* =====================
+       IA DEL MES
+    ===================== */
+    .featured { background: var(--bg2); }
+
+    .featured-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 100% 50%, rgba(250,255,0,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      animation: pulse-badge 2s infinite;
+    }
+
+    .featured-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 20px;
+    }
+
+    .featured-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .featured-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 6px;
+      transition: all var(--transition);
+    }
+    .featured-btn:hover { background: var(--accent2); transform: translateY(-2px); }
+
+    .featured-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feat-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .feat-stat-label { font-size: 0.82rem; color: var(--muted); }
+    .feat-stat-value { font-weight: 700; font-size: 0.95rem; }
+
+    .bar-wrap { margin-top: 4px; height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width 1s ease; }
+
+    /* =====================
+       FAQ
+    ===================== */
+    .faq { background: var(--bg); }
+
+    .faq-list { max-width: 760px; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      gap: 20px;
+      transition: color var(--transition);
+    }
+    .faq-q:hover { color: var(--accent); }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all var(--transition);
+    }
+
+    .faq-a {
+      display: none;
+      padding-top: 14px;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-icon {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+      transform: rotate(45deg);
+    }
+
+    /* =====================
+       NEWSLETTER
+    ===================== */
+    .newsletter {
+      background: var(--bg2);
+      text-align: center;
+    }
+
+    .newsletter-inner {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .newsletter h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .newsletter p {
+      color: var(--muted);
+      margin-bottom: 32px;
+      font-size: 0.95rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 12px 18px;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .newsletter-form input:focus { border-color: var(--accent); }
+    .newsletter-form input::placeholder { color: var(--muted); }
+
+    .newsletter-form button {
+      background: var(--accent);
+      color: #000;
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+    .newsletter-form button:hover { background: var(--accent2); }
+
+    /* =====================
+       FOOTER
+    ===================== */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 40px 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+    .footer-logo span { color: var(--muted); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 16px;
+    }
+
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: all var(--transition);
+    }
+    .social-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* =====================
+       RESPONSIVE
+    ===================== */
+    @media (max-width: 768px) {
+      nav { padding: 0 5vw; }
+      .nav-links, .nav-cta { display: none; }
+
+      .hero { min-height: 80vh; padding: 60px 5vw 50px; }
+      section { padding: 60px 5vw; }
+
+      .featured-inner { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
+
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form button { width: 100%; }
+
+      footer { flex-direction: column; text-align: center; }
+    }
+
+    /* =====================
+       QUIZ / RECOMENDADOR
+    ===================== */
+    .quiz { background: var(--bg2); }
+
+    .quiz-box {
+      max-width: 700px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .quiz-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 0% 100%, rgba(0,245,212,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .quiz-step { display: none; }
+    .quiz-step.active { display: block; }
+
+    .quiz-q {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      line-height: 1.1;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .quiz-opt {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 14px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: all var(--transition);
+      line-height: 1.4;
+    }
+    .quiz-opt:hover { border-color: var(--accent); color: var(--accent); background: rgba(250,255,0,0.05); }
+    .quiz-opt.selected { border-color: var(--accent); color: #000; background: var(--accent); }
+
+    .quiz-progress {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+    .quiz-dot {
+      height: 3px;
+      flex: 1;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background var(--transition);
+    }
+    .quiz-dot.done { background: var(--accent); }
+
+    .quiz-result {
+      display: none;
+    }
+    .quiz-result.show { display: block; }
+
+    .result-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--accent);
+    }
+    .result-subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+    .result-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .result-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .result-tag {
+      background: rgba(0,245,212,0.08);
+      border: 1px solid rgba(0,245,212,0.2);
+      color: var(--accent2);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+    .result-cta {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      border-radius: 6px;
+      margin-right: 12px;
+      margin-bottom: 10px;
+      transition: all var(--transition);
+    }
+    .result-cta:hover { background: var(--accent2); }
+    .result-reset {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .result-reset:hover { border-color: var(--text); color: var(--text); }
+
+    /* =====================
+       PERFILES DE USO
+    ===================== */
+    .perfiles { background: var(--bg); }
+
+    .perfiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .perfil-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: all var(--transition);
+    }
+    .perfil-card:hover { border-color: #333; transform: translateY(-4px); }
+
+    .perfil-icon { font-size: 2.2rem; margin-bottom: 16px; }
+    .perfil-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .perfil-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+
+    .perfil-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .perfil-tool {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+    .perfil-tool-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .perfil-tool-name { font-weight: 600; }
+    .perfil-tool-why { color: var(--muted); font-size: 0.8rem; }
+
+    @media (max-width: 768px) {
+      .quiz-box { padding: 28px 20px; }
+      .quiz-options { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <nav>
+    <div class="nav-logo">Compara<span>IA</span></div>
+    <ul class="nav-links">
+      <li><a href="#herramientas">Herramientas</a></li>
+      <li><a href="#comparativa">Comparativa</a></li>
+      <li><a href="#destacada">Destacada</a></li>
+      <li><a href="#recomendador">Recomendador</a></li>
+      <li><a href="#perfiles">Perfiles</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="#newsletter" class="nav-cta">Suscríbete</a>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" aria-label="Sección principal">
+    <div class="hero-scanline" aria-hidden="true"></div>
+
+    <h1 class="fade-up delay-1">
+      ¿Qué <span class="accent">IA</span><br>
+      necesitas<br>
+      <span class="accent2">hoy?</span>
+    </h1>
+
+    <p class="hero-sub fade-up delay-2">
+      Compara las mejores herramientas de inteligencia artificial. Precios reales, casos de uso reales y valoraciones honestas.
+    </p>
+
+    <!-- Filtros por categoría -->
+    <div class="filter-wrap fade-up delay-3" role="group" aria-label="Filtrar por categoría">
+      <button class="filter-btn active" data-filter="all">Todo</button>
+      <button class="filter-btn" data-filter="escritura">✍️ Escritura</button>
+      <button class="filter-btn" data-filter="imagen">🎨 Imagen</button>
+      <button class="filter-btn" data-filter="codigo">💻 Código</button>
+      <button class="filter-btn" data-filter="voz">🎙️ Voz</button>
+      <button class="filter-btn" data-filter="productividad">⚡ Productividad</button>
+    </div>
+
+    <div class="hero-stats fade-up delay-4">
+      <div class="stat">
+        <div class="stat-num">17+</div>
+        <div class="stat-label">IAs comparadas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Gratis usar esta web</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">48h</div>
+        <div class="stat-label">Actualización máx.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CARDS ===================== -->
+  <!-- Edita aquí los datos de cada herramienta de IA -->
+  <section class="categories" id="herramientas" aria-label="Herramientas de IA">
+    <p class="section-label">Herramientas</p>
+    <h2 class="section-title">Explora por categoría</h2>
+
+    <div class="cards-grid" id="cardsGrid">
+
+      <article class="ai-card fade-up" data-category="escritura codigo productividad" aria-label="Claude de Anthropic">
+        <div class="card-emoji" aria-hidden="true">🤖</div>
+        <h3 class="card-name">Claude</h3>
+        <div class="card-category">Escritura · Código · Productividad</div>
+        <p class="card-desc">La IA de Anthropic. Excelente para redacción larga, análisis de documentos y código limpio. Gran contexto de ventana.</p>
+        <span class="card-price">Gratis / Pro $20/mes</span>
+        <div class="card-stars" aria-label="Valoración: 5 estrellas">★★★★★</div>
+        <a href="https://claude.ai" class="card-link" target="_blank" rel="noopener">Probar Claude →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-1" data-category="escritura codigo productividad" aria-label="ChatGPT de OpenAI">
+        <div class="card-emoji" aria-hidden="true">💬</div>
+        <h3 class="card-name">ChatGPT</h3>
+        <div class="card-category">Escritura · Código · Productividad</div>
+        <p class="card-desc">El rey del mercado. Plugins, análisis de imágenes, generación de código y el mejor ecosistema de integraciones.</p>
+        <span class="card-price">Gratis / Plus $20/mes</span>
+        <div class="card-stars" aria-label="Valoración: 5 estrellas">★★★★★</div>
+        <a href="https://chat.openai.com" class="card-link" target="_blank" rel="noopener">Probar ChatGPT →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-2" data-category="escritura productividad" aria-label="Gemini de Google">
+        <div class="card-emoji" aria-hidden="true">💎</div>
+        <h3 class="card-name">Gemini</h3>
+        <div class="card-category">Escritura · Productividad</div>
+        <p class="card-desc">La apuesta de Google. Integrado con Gmail, Docs y Drive. Ideal si ya usas el ecosistema de Google en tu trabajo.</p>
+        <span class="card-price">Gratis / Advanced $19.99/mes</span>
+        <div class="card-stars" aria-label="Valoración: 4 estrellas">★★★★☆</div>
+        <a href="https://gemini.google.com" class="card-link" target="_blank" rel="noopener">Probar Gemini →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-3" data-category="productividad escritura" aria-label="Perplexity AI">
+        <div class="card-emoji" aria-hidden="true">🔍</div>
+        <h3 class="card-name">Perplexity</h3>
+        <div class="card-category">Productividad · Búsqueda</div>
+        <p class="card-desc">El mejor buscador con IA. Respuestas con fuentes en tiempo real. Perfecto para investigación y noticias actualizadas.</p>
+        <span class="card-price">Gratis / Pro $20/mes</span>
+        <div class="card-stars" aria-label="Valoración: 4 estrellas">★★★★☆</div>
+        <a href="https://perplexity.ai" class="card-link" target="_blank" rel="noopener">Probar Perplexity →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-4" data-category="imagen" aria-label="Midjourney">
+        <div class="card-emoji" aria-hidden="true">🎨</div>
+        <h3 class="card-name">Midjourney</h3>
+        <div class="card-category">Imagen</div>
+        <p class="card-desc">El estándar de oro para imágenes IA. Calidad artística insuperable. Se usa vía Discord o web.</p>
+        <span class="card-price">Desde $10/mes</span>
+        <div class="card-stars" aria-label="Valoración: 5 estrellas">★★★★★</div>
+        <a href="https://midjourney.com" class="card-link" target="_blank" rel="noopener">Probar Midjourney →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-1" data-category="imagen" aria-label="DALL·E 3">
+        <div class="card-emoji" aria-hidden="true">🖼️</div>
+        <h3 class="card-name">DALL·E 3</h3>
+        <div class="card-category">Imagen</div>
+        <p class="card-desc">Generador de imágenes de OpenAI, integrado en ChatGPT Plus. Muy bueno siguiendo instrucciones de texto complejas.</p>
+        <span class="card-price">Incluido en ChatGPT Plus</span>
+        <div class="card-stars" aria-label="Valoración: 4 estrellas">★★★★☆</div>
+        <a href="https://openai.com/dall-e-3" class="card-link" target="_blank" rel="noopener">Explorar DALL·E →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-2" data-category="codigo productividad" aria-label="GitHub Copilot">
+        <div class="card-emoji" aria-hidden="true">👾</div>
+        <h3 class="card-name">Copilot</h3>
+        <div class="card-category">Código</div>
+        <p class="card-desc">El asistente de código de GitHub + OpenAI. Se integra en VS Code, IntelliJ y más. Indispensable para programadores.</p>
+        <span class="card-price">$10/mes</span>
+        <div class="card-stars" aria-label="Valoración: 5 estrellas">★★★★★</div>
+        <a href="https://github.com/features/copilot" class="card-link" target="_blank" rel="noopener">Probar Copilot →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-3" data-category="voz" aria-label="ElevenLabs">
+        <div class="card-emoji" aria-hidden="true">🎙️</div>
+        <h3 class="card-name">ElevenLabs</h3>
+        <div class="card-category">Voz</div>
+        <p class="card-desc">Síntesis de voz ultrarrealista. Ideal para podcasts, vídeos, doblaje y clonación de voz. La mejor del mercado.</p>
+        <span class="card-price">Gratis / Starter $5/mes</span>
+        <div class="card-stars" aria-label="Valoración: 5 estrellas">★★★★★</div>
+        <a href="https://elevenlabs.io" class="card-link" target="_blank" rel="noopener">Probar ElevenLabs →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-4" data-category="voz productividad" aria-label="Whisper de OpenAI">
+        <div class="card-emoji" aria-hidden="true">🗣️</div>
+        <h3 class="card-name">Whisper</h3>
+        <div class="card-category">Voz · Transcripción</div>
+        <p class="card-desc">El mejor sistema de reconocimiento de voz open source. Transcripción multiidioma con precisión excepcional.</p>
+        <span class="card-price">Gratis (open source)</span>
+        <div class="card-stars" aria-label="Valoración: 4 estrellas">★★★★☆</div>
+        <a href="https://openai.com/research/whisper" class="card-link" target="_blank" rel="noopener">Ver Whisper →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-1" data-category="productividad escritura" aria-label="Notion AI">
+        <div class="card-emoji" aria-hidden="true">📋</div>
+        <h3 class="card-name">Notion AI</h3>
+        <div class="card-category">Productividad · Escritura</div>
+        <p class="card-desc">IA integrada en Notion. Genera resúmenes, crea listas de tareas, redacta emails y mejora tus notas al instante.</p>
+        <span class="card-price">$10/mes (add-on)</span>
+        <div class="card-stars" aria-label="Valoración: 4 estrellas">★★★★☆</div>
+        <a href="https://notion.so/product/ai" class="card-link" target="_blank" rel="noopener">Probar Notion AI →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-2" data-category="imagen video" aria-label="Runway ML">
+        <div class="card-emoji" aria-hidden="true">🎬</div>
+        <h3 class="card-name">Runway</h3>
+        <div class="card-category">Vídeo · Imagen</div>
+        <p class="card-desc">La IA de vídeo más avanzada. Genera clips realistas desde texto o imagen. Usada en producción cinematográfica profesional.</p>
+        <span class="card-price">Gratis / Standard $15/mes</span>
+        <div class="card-stars" aria-label="Valoración: 5 estrellas">★★★★★</div>
+        <a href="https://runwayml.com" class="card-link" target="_blank" rel="noopener">Probar Runway →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-3" data-category="escritura productividad codigo" aria-label="Mistral AI">
+        <div class="card-emoji" aria-hidden="true">🌬️</div>
+        <h3 class="card-name">Mistral</h3>
+        <div class="card-category">Escritura · Código · Productividad</div>
+        <p class="card-desc">El modelo europeo más potente. Open source, rápido y con excelente soporte del español. Alternativa seria a ChatGPT.</p>
+        <span class="card-price">Gratis / Pro €14.99/mes</span>
+        <div class="card-stars" aria-label="Valoración: 4 estrellas">★★★★☆</div>
+        <a href="https://mistral.ai" class="card-link" target="_blank" rel="noopener">Probar Mistral →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-4" data-category="codigo productividad" aria-label="Cursor AI">
+        <div class="card-emoji" aria-hidden="true">⌨️</div>
+        <h3 class="card-name">Cursor</h3>
+        <div class="card-category">Código</div>
+        <p class="card-desc">El editor de código con IA favorito de los desarrolladores. Edita, genera y refactoriza proyectos enteros con lenguaje natural.</p>
+        <span class="card-price">Gratis / Pro $20/mes</span>
+        <div class="card-stars" aria-label="Valoración: 5 estrellas">★★★★★</div>
+        <a href="https://cursor.sh" class="card-link" target="_blank" rel="noopener">Probar Cursor →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-1" data-category="imagen" aria-label="Stable Diffusion">
+        <div class="card-emoji" aria-hidden="true">🌊</div>
+        <h3 class="card-name">Stable Diffusion</h3>
+        <div class="card-category">Imagen</div>
+        <p class="card-desc">El generador de imágenes open source más potente. Gratis si lo ejecutas en local. Control total sin restricciones.</p>
+        <span class="card-price">Gratis (open source)</span>
+        <div class="card-stars" aria-label="Valoración: 4 estrellas">★★★★☆</div>
+        <a href="https://stability.ai" class="card-link" target="_blank" rel="noopener">Ver Stable Diffusion →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-2" data-category="productividad escritura" aria-label="Microsoft Copilot">
+        <div class="card-emoji" aria-hidden="true">🪟</div>
+        <h3 class="card-name">MS Copilot</h3>
+        <div class="card-category">Productividad · Escritura</div>
+        <p class="card-desc">La IA de Microsoft integrada en Word, Excel, PowerPoint y Outlook. Imprescindible para usuarios del ecosistema Office 365.</p>
+        <span class="card-price">$30/mes (Microsoft 365)</span>
+        <div class="card-stars" aria-label="Valoración: 4 estrellas">★★★★☆</div>
+        <a href="https://copilot.microsoft.com" class="card-link" target="_blank" rel="noopener">Probar MS Copilot →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-3" data-category="voz productividad" aria-label="Otter AI">
+        <div class="card-emoji" aria-hidden="true">🦦</div>
+        <h3 class="card-name">Otter.ai</h3>
+        <div class="card-category">Voz · Productividad</div>
+        <p class="card-desc">Transcripción automática de reuniones en tiempo real. Se integra con Zoom, Teams y Meet. Genera resúmenes y puntos de acción.</p>
+        <span class="card-price">Gratis / Pro $16.99/mes</span>
+        <div class="card-stars" aria-label="Valoración: 4 estrellas">★★★★☆</div>
+        <a href="https://otter.ai" class="card-link" target="_blank" rel="noopener">Probar Otter →</a>
+      </article>
+
+      <article class="ai-card fade-up delay-4" data-category="escritura productividad" aria-label="Grok de xAI">
+        <div class="card-emoji" aria-hidden="true">⚡</div>
+        <h3 class="card-name">Grok</h3>
+        <div class="card-category">Escritura · Productividad</div>
+        <p class="card-desc">La IA de Elon Musk integrada en X (Twitter). Respuestas sin filtros y acceso a información en tiempo real de la red social.</p>
+        <span class="card-price">Incluido en X Premium ($8/mes)</span>
+        <div class="card-stars" aria-label="Valoración: 4 estrellas">★★★★☆</div>
+        <a href="https://x.ai" class="card-link" target="_blank" rel="noopener">Probar Grok →</a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== TABLA COMPARATIVA ===================== -->
+  <!-- Edita aquí los datos de la tabla comparativa -->
+  <section class="comparison" id="comparativa" aria-label="Tabla comparativa">
+    <p class="section-label">Comparativa</p>
+    <h2 class="section-title">Frente a frente</h2>
+
+    <div class="table-wrap" role="region" aria-label="Tabla de comparación de IAs">
+      <table>
+        <thead>
+          <tr>
+            <th>Herramienta</th>
+            <th>Precio base</th>
+            <th>Mejor para</th>
+            <th>Español</th>
+            <th>API</th>
+            <th>Valoración</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-name">Claude</td>
+            <td class="td-price">Gratis / $20</td>
+            <td><span class="td-badge">Escritura larga</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★★</td>
+          </tr>
+          <tr>
+            <td class="td-name">ChatGPT</td>
+            <td class="td-price">Gratis / $20</td>
+            <td><span class="td-badge">Uso general</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★★</td>
+          </tr>
+          <tr>
+            <td class="td-name">Gemini</td>
+            <td class="td-price">Gratis / $19.99</td>
+            <td><span class="td-badge">Ecosistema Google</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★☆</td>
+          </tr>
+          <tr>
+            <td class="td-name">Perplexity</td>
+            <td class="td-price">Gratis / $20</td>
+            <td><span class="td-badge">Búsqueda en tiempo real</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★☆</td>
+          </tr>
+          <tr>
+            <td class="td-name">Midjourney</td>
+            <td class="td-price">Desde $10</td>
+            <td><span class="td-badge">Imágenes artísticas</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-no">✗ No</td>
+            <td class="td-stars">★★★★★</td>
+          </tr>
+          <tr>
+            <td class="td-name">DALL·E 3</td>
+            <td class="td-price">Incluido en Plus</td>
+            <td><span class="td-badge">Imágenes desde texto</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★☆</td>
+          </tr>
+          <tr>
+            <td class="td-name">GitHub Copilot</td>
+            <td class="td-price">$10/mes</td>
+            <td><span class="td-badge">Programación</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-no">✗ No</td>
+            <td class="td-stars">★★★★★</td>
+          </tr>
+          <tr>
+            <td class="td-name">ElevenLabs</td>
+            <td class="td-price">Gratis / $5</td>
+            <td><span class="td-badge">Síntesis de voz</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★★</td>
+          </tr>
+          <tr>
+            <td class="td-name">Whisper</td>
+            <td class="td-price">Gratis (open source)</td>
+            <td><span class="td-badge">Transcripción de voz</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★☆</td>
+          </tr>
+          <tr>
+            <td class="td-name">Notion AI</td>
+            <td class="td-price">$10/mes (add-on)</td>
+            <td><span class="td-badge">Productividad</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-no">✗ No</td>
+            <td class="td-stars">★★★★☆</td>
+          </tr>
+          <tr>
+            <td class="td-name">Runway</td>
+            <td class="td-price">Gratis / $15</td>
+            <td><span class="td-badge">Vídeo con IA</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★★</td>
+          </tr>
+          <tr>
+            <td class="td-name">Mistral</td>
+            <td class="td-price">Gratis / €14.99</td>
+            <td><span class="td-badge">Modelo europeo</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★☆</td>
+          </tr>
+          <tr>
+            <td class="td-name">Cursor</td>
+            <td class="td-price">Gratis / $20</td>
+            <td><span class="td-badge">Editor de código IA</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-no">✗ No</td>
+            <td class="td-stars">★★★★★</td>
+          </tr>
+          <tr>
+            <td class="td-name">Stable Diffusion</td>
+            <td class="td-price">Gratis (open source)</td>
+            <td><span class="td-badge">Imágenes open source</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★☆</td>
+          </tr>
+          <tr>
+            <td class="td-name">MS Copilot</td>
+            <td class="td-price">$30/mes</td>
+            <td><span class="td-badge">Office 365</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-no">✗ No</td>
+            <td class="td-stars">★★★★☆</td>
+          </tr>
+          <tr>
+            <td class="td-name">Otter.ai</td>
+            <td class="td-price">Gratis / $16.99</td>
+            <td><span class="td-badge">Reuniones y notas</span></td>
+            <td class="td-no">✗ Limitado</td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-stars">★★★★☆</td>
+          </tr>
+          <tr>
+            <td class="td-name">Grok</td>
+            <td class="td-price">X Premium $8/mes</td>
+            <td><span class="td-badge">Tiempo real en X</span></td>
+            <td class="td-yes">✓ Sí</td>
+            <td class="td-no">✗ No</td>
+            <td class="td-stars">★★★★☆</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ===================== RECOMENDADOR IA ===================== -->
+  <section class="quiz" id="recomendador" aria-label="Recomendador personalizado de IA">
+    <p class="section-label">Recomendador</p>
+    <h2 class="section-title">¿Cuál es tu IA?</h2>
+
+    <div class="quiz-box">
+      <div class="quiz-progress" aria-label="Progreso del cuestionario">
+        <div class="quiz-dot done" id="dot0"></div>
+        <div class="quiz-dot" id="dot1"></div>
+        <div class="quiz-dot" id="dot2"></div>
+        <div class="quiz-dot" id="dot3"></div>
+      </div>
+
+      <!-- Paso 1 -->
+      <div class="quiz-step active" id="step0">
+        <p class="quiz-q">¿Para qué quieres usar la IA principalmente?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" data-val="escritura">✍️ Escribir textos, emails o contenido</button>
+          <button class="quiz-opt" data-val="codigo">💻 Programar o aprender a programar</button>
+          <button class="quiz-opt" data-val="imagen">🎨 Crear imágenes o vídeos</button>
+          <button class="quiz-opt" data-val="busqueda">🔍 Buscar información con fuentes</button>
+          <button class="quiz-opt" data-val="voz">🎙️ Transcribir o generar voz</button>
+          <button class="quiz-opt" data-val="trabajo">⚡ Productividad y trabajo de oficina</button>
+        </div>
+      </div>
+
+      <!-- Paso 2 -->
+      <div class="quiz-step" id="step1">
+        <p class="quiz-q">¿Cuál es tu nivel de experiencia con IA?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" data-val="principiante">🐣 Principiante total, nunca he usado una</button>
+          <button class="quiz-opt" data-val="basico">👶 He probado ChatGPT alguna vez</button>
+          <button class="quiz-opt" data-val="intermedio">🧑 La uso regularmente en mi trabajo</button>
+          <button class="quiz-opt" data-val="avanzado">🧙 Soy avanzado, uso APIs y prompts complejos</button>
+        </div>
+      </div>
+
+      <!-- Paso 3 -->
+      <div class="quiz-step" id="step2">
+        <p class="quiz-q">¿Cuánto estás dispuesto a pagar al mes?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" data-val="gratis">💸 Nada, solo versiones gratuitas</button>
+          <button class="quiz-opt" data-val="bajo">☕ Hasta $10/mes</button>
+          <button class="quiz-opt" data-val="medio">💼 Hasta $20-25/mes</button>
+          <button class="quiz-opt" data-val="alto">🚀 Lo que haga falta si merece la pena</button>
+        </div>
+      </div>
+
+      <!-- Paso 4 -->
+      <div class="quiz-step" id="step3">
+        <p class="quiz-q">¿En qué idioma trabajas principalmente?</p>
+        <div class="quiz-options">
+          <button class="quiz-opt" data-val="español">🇪🇸 Solo en español</button>
+          <button class="quiz-opt" data-val="mixto">🌍 Español e inglés a partes iguales</button>
+          <button class="quiz-opt" data-val="ingles">🇬🇧 Principalmente en inglés</button>
+          <button class="quiz-opt" data-val="otros">🌐 Otros idiomas también</button>
+        </div>
+      </div>
+
+      <!-- Resultado -->
+      <div class="quiz-result" id="quizResult">
+        <div class="result-subtitle">Tu recomendación personalizada</div>
+        <div class="result-title" id="resultName"></div>
+        <div class="result-desc" id="resultDesc"></div>
+        <div class="result-tags" id="resultTags"></div>
+        <div>
+          <a href="#" class="result-cta" id="resultCta" target="_blank" rel="noopener">Probar ahora →</a>
+          <button class="result-reset" id="quizReset">Volver a empezar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PERFILES DE USO ===================== -->
+  <section class="perfiles" id="perfiles" aria-label="Recomendaciones por perfil de usuario">
+    <p class="section-label">Por perfil</p>
+    <h2 class="section-title">Stack recomendado</h2>
+
+    <div class="perfiles-grid">
+
+      <div class="perfil-card">
+        <div class="perfil-icon">👩‍💼</div>
+        <h3 class="perfil-title">Profesional de oficina</h3>
+        <p class="perfil-desc">Gestión de emails, redacción de informes, resúmenes de reuniones y presentaciones. Necesitas algo integrado y fiable.</p>
+        <div class="perfil-stack">
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">1</span>
+            <div><div class="perfil-tool-name">Microsoft Copilot</div><div class="perfil-tool-why">Integrado en Word, Excel y Outlook</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">2</span>
+            <div><div class="perfil-tool-name">Claude</div><div class="perfil-tool-why">Redacción profesional en español</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">3</span>
+            <div><div class="perfil-tool-name">Otter.ai</div><div class="perfil-tool-why">Transcripción de reuniones</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="perfil-card">
+        <div class="perfil-icon">💻</div>
+        <h3 class="perfil-title">Desarrollador / Programador</h3>
+        <p class="perfil-desc">Escribir código, depurar errores, revisar pull requests y entender bases de código heredadas. Máxima productividad técnica.</p>
+        <div class="perfil-stack">
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">1</span>
+            <div><div class="perfil-tool-name">Cursor</div><div class="perfil-tool-why">Editor de código con IA nativa</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">2</span>
+            <div><div class="perfil-tool-name">Claude</div><div class="perfil-tool-why">Explicaciones técnicas detalladas</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">3</span>
+            <div><div class="perfil-tool-name">GitHub Copilot</div><div class="perfil-tool-why">Autocompletado en cualquier IDE</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="perfil-card">
+        <div class="perfil-icon">🎨</div>
+        <h3 class="perfil-title">Creador de contenido</h3>
+        <p class="perfil-desc">Guiones, posts, thumbnails, vídeos cortos y branding. Necesitas velocidad creativa y variedad de formatos.</p>
+        <div class="perfil-stack">
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">1</span>
+            <div><div class="perfil-tool-name">ChatGPT Plus</div><div class="perfil-tool-why">Guiones, ideas y copywriting</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">2</span>
+            <div><div class="perfil-tool-name">Midjourney</div><div class="perfil-tool-why">Imágenes y miniaturas llamativas</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">3</span>
+            <div><div class="perfil-tool-name">Runway</div><div class="perfil-tool-why">Vídeos e imágenes animadas</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="perfil-card">
+        <div class="perfil-icon">🎓</div>
+        <h3 class="perfil-title">Estudiante</h3>
+        <p class="perfil-desc">Resumir apuntes, entender conceptos difíciles, practicar idiomas y revisar trabajos. Sin gastar dinero.</p>
+        <div class="perfil-stack">
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">1</span>
+            <div><div class="perfil-tool-name">Claude (gratis)</div><div class="perfil-tool-why">El mejor para español y razonamiento</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">2</span>
+            <div><div class="perfil-tool-name">Perplexity (gratis)</div><div class="perfil-tool-why">Búsqueda con fuentes citadas</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">3</span>
+            <div><div class="perfil-tool-name">Whisper (gratis)</div><div class="perfil-tool-why">Transcribir clases y conferencias</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="perfil-card">
+        <div class="perfil-icon">🚀</div>
+        <h3 class="perfil-title">Emprendedor / Startup</h3>
+        <p class="perfil-desc">Validar ideas, redactar propuestas, crear landing pages, analizar competencia y automatizar tareas repetitivas.</p>
+        <div class="perfil-stack">
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">1</span>
+            <div><div class="perfil-tool-name">ChatGPT Plus</div><div class="perfil-tool-why">Versatilidad máxima para todo</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">2</span>
+            <div><div class="perfil-tool-name">Perplexity Pro</div><div class="perfil-tool-why">Investigación de mercado actualizada</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">3</span>
+            <div><div class="perfil-tool-name">Notion AI</div><div class="perfil-tool-why">Todo centralizado con IA</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="perfil-card">
+        <div class="perfil-icon">🎙️</div>
+        <h3 class="perfil-title">Podcaster / YouTuber</h3>
+        <p class="perfil-desc">Transcripciones, subtítulos, resúmenes de episodios, show notes y voces sintéticas para intros y ads.</p>
+        <div class="perfil-stack">
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">1</span>
+            <div><div class="perfil-tool-name">ElevenLabs</div><div class="perfil-tool-why">Voz sintética ultrarrealista</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">2</span>
+            <div><div class="perfil-tool-name">Whisper</div><div class="perfil-tool-why">Transcripción automática precisa</div></div>
+          </div>
+          <div class="perfil-tool">
+            <span class="perfil-tool-num">3</span>
+            <div><div class="perfil-tool-name">Claude</div><div class="perfil-tool-why">Show notes y guiones detallados</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <!-- Edita aquí las preguntas frecuentes -->
+  <section class="faq" id="faq" aria-label="Preguntas frecuentes">
+    <p class="section-label">Preguntas</p>
+    <h2 class="section-title">FAQ</h2>
+
+    <div class="faq-list" role="list">
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" tabindex="0" aria-expanded="false">
+          ¿Cuál es la mejor IA gratuita en 2026?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a">
+          En 2026, Claude y ChatGPT siguen siendo las mejores opciones gratuitas para uso general. Claude destaca especialmente en español, análisis de documentos largos y razonamiento complejo. Perplexity es la mejor opción gratuita si necesitas información actualizada con fuentes verificadas. Mistral es una excelente alternativa europea también gratuita.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" tabindex="0" aria-expanded="false">
+          ¿ChatGPT o Claude en 2026: cuál es mejor?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a">
+          Depende del uso. ChatGPT tiene el ecosistema más amplio con miles de GPTs, plugins e integraciones. Claude es superior para análisis de documentos largos, redacción profesional y comprensión del español. En 2026 ambos tienen capacidades de razonamiento avanzado, pero Claude destaca en honestidad y seguimiento de instrucciones complejas. Muchos profesionales usan los dos según la tarea.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" tabindex="0" aria-expanded="false">
+          ¿Vale la pena pagar por una IA en 2026?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a">
+          Si usas IA para trabajo, absolutamente sí. Los planes de pago ($10-20/mes) dan acceso a los modelos más potentes, mayor velocidad, sin límites de uso, acceso a internet en tiempo real y funciones exclusivas como generación de imágenes o análisis de archivos. El ROI es muy alto: si te ahorra 2 horas al mes ya compensa el precio.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" tabindex="0" aria-expanded="false">
+          ¿Qué IA es mejor para generar imágenes en 2026?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a">
+          Midjourney sigue siendo el referente en calidad artística y estética. DALL·E 3 (incluido en ChatGPT Plus) es mejor siguiendo instrucciones de texto muy específicas. Stable Diffusion es la opción gratuita y open source si quieres control total sin restricciones. Para vídeo con IA, Runway Gen-3 es ahora el estándar de la industria.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" tabindex="0" aria-expanded="false">
+          ¿Es seguro usar IA para trabajo confidencial?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a">
+          Con precaución. Los planes empresariales de ChatGPT, Claude y Gemini garantizan que no usan tus datos para entrenar sus modelos. Evita pegar información confidencial en versiones gratuitas. En 2026 hay opciones on-premise cada vez más accesibles si necesitas máxima privacidad, como modelos Mistral o LLaMA ejecutados en tus propios servidores.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" tabindex="0" aria-expanded="false">
+          ¿Cuántas IAs debería usar a la vez?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a">
+          La mayoría de profesionales en 2026 usan 2-3 IAs especializadas. Una combinación habitual: Claude o ChatGPT para escritura y razonamiento, Perplexity para búsqueda con fuentes, y Midjourney o DALL·E para imágenes. No hace falta pagar todas: elige 1 de pago según tu uso principal y complementa con gratuitas.
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" tabindex="0" aria-expanded="false">
+          ¿Qué IA es mejor para aprender a programar?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a">
+          Para aprender: Claude y ChatGPT son excelentes explicando conceptos paso a paso y corrigiendo errores con paciencia. Para programar de forma profesional: Cursor (editor con IA integrada) y GitHub Copilot son los más usados. Claude destaca especialmente explicando el "por qué" del código, no solo el "cómo".
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <div class="faq-q" tabindex="0" aria-expanded="false">
+          ¿Cuál es la IA con mejor español en 2026?
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </div>
+        <div class="faq-a">
+          Claude y ChatGPT tienen el mejor nivel de español, prácticamente indistinguible de un nativo culto. Gemini también es muy bueno al estar integrado con Google, que tiene décadas de datos en español. Mistral destaca en lenguas europeas incluido el español. Evita modelos más pequeños u open source si necesitas calidad en español, ya que suelen ser más débiles en idiomas distintos al inglés.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== NEWSLETTER ===================== -->
+  <section class="newsletter" id="newsletter" aria-label="Suscripción newsletter">
+    <div class="newsletter-inner">
+      <h2>Mantente<br>al día</h2>
+      <p>Cada semana, las novedades más importantes del mundo IA directas a tu bandeja de entrada. Sin spam.</p>
+      <div class="newsletter-form" role="form" aria-label="Formulario de suscripción">
+        <input type="email" placeholder="tu@email.com" aria-label="Tu dirección de email" />
+        <button type="button" aria-label="Suscribirse al newsletter">Unirme</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="footer-logo">Compara<span>IA</span></div>
+    <p class="footer-copy">© 2026 ComparaIA · Hecho con ❤️ para la comunidad hispanohablante</p>
+    <div class="footer-social" aria-label="Redes sociales">
+      <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+      <a href="#" class="social-link" aria-label="YouTube">▶</a>
+      <a href="#" class="social-link" aria-label="Instagram">◎</a>
+      <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+    </div>
+  </footer>
+
+  <!-- ===================== JS ===================== -->
+  <script>
+    // --- Filtros de categoría ---
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.ai-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Actualizar botón activo
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+
+        cards.forEach(card => {
+          if (filter === 'all') {
+            card.classList.remove('hidden');
+          } else {
+            const cats = card.dataset.category || '';
+            card.classList.toggle('hidden', !cats.includes(filter));
+          }
+        });
+      });
+
+      // Soporte teclado
+      btn.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') btn.click();
+      });
+    });
+
+    // --- FAQ accordion ---
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const q = item.querySelector('.faq-q');
+      q.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        faqItems.forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          q.setAttribute('aria-expanded', 'true');
+        }
+      });
+      q.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); q.click(); }
+      });
+    });
+
+    // --- Newsletter submit ---
+    const newsletterBtn = document.querySelector('.newsletter-form button');
+    const newsletterInput = document.querySelector('.newsletter-form input');
+
+    newsletterBtn.addEventListener('click', () => {
+      if (newsletterInput.value.includes('@')) {
+        newsletterBtn.textContent = '✓ Listo!';
+        newsletterBtn.style.background = 'var(--accent2)';
+        newsletterInput.value = '';
+      } else {
+        newsletterInput.style.borderColor = '#ff4444';
+        setTimeout(() => newsletterInput.style.borderColor = '', 1500);
+      }
+    });
+
+
+    // --- QUIZ RECOMENDADOR ---
+    const steps = document.querySelectorAll('.quiz-step');
+    const dots = document.querySelectorAll('.quiz-dot');
+    const quizResult = document.getElementById('quizResult');
+    const quizBox = document.querySelector('.quiz-box');
+    let answers = {};
+    let currentStep = 0;
+
+    const recommendations = {
+      escritura: {
+        gratis: { español: { name: 'Claude', desc: 'Para escritura en español con presupuesto cero, Claude es tu mejor opción. Su comprensión del español es excepcional, genera textos naturales y sigue instrucciones complejas mejor que cualquier otra IA gratuita.', tags: ['Gratis', 'Español nativo', 'Textos largos', 'Sin registro obligatorio'], url: 'https://claude.ai' },
+          default: { name: 'Claude', desc: 'Claude es la mejor IA gratuita para escritura. Genera textos naturales, entiende el contexto y es ideal para emails, artículos y documentos profesionales.', tags: ['Gratis', 'Alta calidad', 'Textos largos'], url: 'https://claude.ai' }
+        },
+        bajo: { name: 'Claude Pro', desc: 'Por $20/mes Claude Pro te da acceso ilimitado al modelo más potente para escritura. Sin límites, con adjuntos de documentos y prioridad en horas punta.', tags: ['$20/mes', 'Sin límites', 'Documentos largos', 'Español premium'], url: 'https://claude.ai' },
+        medio: { name: 'Claude Pro', desc: 'Claude Pro es la elección definitiva para escritura profesional en español. Documentos largos, análisis de archivos y la mejor calidad del mercado.', tags: ['$20/mes', 'Premium', 'Documentos', 'Español'], url: 'https://claude.ai' },
+        alto: { name: 'ChatGPT Plus + Claude Pro', desc: 'Con presupuesto amplio, usa ambos: ChatGPT Plus para brainstorming e integraciones, Claude Pro para redacción final y pulido de textos en español.', tags: ['$40/mes total', 'Lo mejor de ambos mundos', 'Sin límites'], url: 'https://claude.ai' }
+      },
+      codigo: {
+        gratis: { name: 'Claude', desc: 'Para programar gratis, Claude es el más honesto: te dice cuando no sabe algo y explica el código en detalle. Ideal para aprender y para proyectos personales.', tags: ['Gratis', 'Explicaciones detalladas', 'Muchos lenguajes'], url: 'https://claude.ai' },
+        bajo: { name: 'GitHub Copilot', desc: 'Por $10/mes GitHub Copilot se integra directamente en tu editor (VS Code, IntelliJ) y completa código en tiempo real. Imprescindible si programas a diario.', tags: ['$10/mes', 'VS Code', 'Autocompletado', 'Tiempo real'], url: 'https://github.com/features/copilot' },
+        medio: { name: 'Cursor Pro', desc: 'Cursor Pro ($20/mes) es el editor de código con IA más potente del mercado. Edita archivos enteros, entiende tu base de código completa y genera funcionalidades desde cero.', tags: ['$20/mes', 'Editor completo', 'IA nativa', 'Proyectos grandes'], url: 'https://cursor.sh' },
+        alto: { name: 'Cursor + Claude Pro', desc: 'La combinación élite: Cursor Pro para el editor con IA y Claude Pro para revisiones de arquitectura, documentación y consultas técnicas complejas.', tags: ['$40/mes total', 'Stack profesional', 'Máxima productividad'], url: 'https://cursor.sh' }
+      },
+      imagen: {
+        gratis: { name: 'Stable Diffusion', desc: 'Si no quieres gastar nada, Stable Diffusion es open source y completamente gratuito. Requiere instalación técnica, pero tiene calidad profesional y control total.', tags: ['Gratis', 'Open source', 'Control total', 'Sin restricciones'], url: 'https://stability.ai' },
+        bajo: { name: 'DALL·E 3 (vía ChatGPT)', desc: 'Con ChatGPT Plus ($20/mes) obtienes DALL·E 3 integrado. Fácil de usar, sigue instrucciones de texto muy bien y además tienes el resto de capacidades de ChatGPT.', tags: ['$20/mes', 'Fácil de usar', 'Instrucciones en texto', 'Todo en uno'], url: 'https://chat.openai.com' },
+        medio: { name: 'Midjourney', desc: 'Midjourney produce las imágenes más impresionantes del mercado. Desde $10/mes, es el estándar de la industria para diseño, arte y contenido visual de alto impacto.', tags: ['Desde $10/mes', 'Calidad artística', 'Estético', 'Referente industrial'], url: 'https://midjourney.com' },
+        alto: { name: 'Midjourney + Runway', desc: 'Midjourney para imágenes estáticas de máxima calidad, Runway Gen-3 para vídeo con IA. El stack definitivo para creadores de contenido visual profesional.', tags: ['Stack premium', 'Imágenes + Vídeo', 'Calidad cinematográfica'], url: 'https://midjourney.com' }
+      },
+      busqueda: {
+        gratis: { name: 'Perplexity', desc: 'Perplexity gratuito es la mejor IA de búsqueda del mercado. Responde con fuentes verificadas en tiempo real, mucho mejor que buscar en Google para preguntas complejas.', tags: ['Gratis', 'Fuentes verificadas', 'Tiempo real', 'Sin publicidad'], url: 'https://perplexity.ai' },
+        bajo: { name: 'Perplexity Pro', desc: 'Perplexity Pro ($20/mes) añade búsquedas ilimitadas, acceso a modelos avanzados y capacidad de subir archivos para analizar junto con búsquedas web.', tags: ['$20/mes', 'Sin límites', 'Modelos avanzados', 'Archivos'], url: 'https://perplexity.ai' },
+        medio: { name: 'Perplexity Pro', desc: 'Para investigación profesional, Perplexity Pro es indispensable. Acceso a información actualizada al minuto con fuentes citadas y verificadas.', tags: ['$20/mes', 'Investigación profesional', 'Fuentes primarias'], url: 'https://perplexity.ai' },
+        alto: { name: 'Perplexity Pro + ChatGPT Plus', desc: 'Perplexity Pro para búsqueda e investigación en tiempo real, ChatGPT Plus para procesar y sintetizar esa información. Investigación de nivel académico o periodístico.', tags: ['Stack investigación', 'Tiempo real + Síntesis', 'Nivel profesional'], url: 'https://perplexity.ai' }
+      },
+      voz: {
+        gratis: { name: 'Whisper (OpenAI)', desc: 'Whisper es el mejor sistema de transcripción open source del mundo. Completamente gratuito, funciona en local y transcribe en español con precisión excepcional.', tags: ['Gratis', 'Open source', 'Español excelente', 'Local'], url: 'https://openai.com/research/whisper' },
+        bajo: { name: 'Otter.ai', desc: 'Otter.ai es perfecto para transcribir reuniones automáticamente. Se integra con Zoom y Teams y genera resúmenes inteligentes. Desde $17/mes.', tags: ['$17/mes', 'Reuniones', 'Zoom & Teams', 'Resúmenes'], url: 'https://otter.ai' },
+        medio: { name: 'ElevenLabs', desc: 'Si necesitas generar voz sintética ultrarrealista además de transcribir, ElevenLabs es el referente absoluto. Voces clonadas, múltiples idiomas y calidad de doblaje profesional.', tags: ['Desde $5/mes', 'Voz sintética', 'Clonación de voz', 'Calidad estudio'], url: 'https://elevenlabs.io' },
+        alto: { name: 'ElevenLabs + Otter.ai', desc: 'El stack completo de voz: ElevenLabs para generación sintética de nivel profesional, Otter.ai para transcripción automática de todas tus reuniones y entrevistas.', tags: ['Stack voz completo', 'Generación + Transcripción', 'Nivel broadcast'], url: 'https://elevenlabs.io' }
+      },
+      trabajo: {
+        gratis: { name: 'Claude + Gemini', desc: 'Para productividad de oficina sin coste: Claude para redactar y analizar documentos, Gemini gratis para integrarse con tu Gmail y Google Docs del día a día.', tags: ['Gratis', 'Gmail & Docs', 'Redacción', 'Análisis'], url: 'https://claude.ai' },
+        bajo: { name: 'Notion AI', desc: 'Si ya usas Notion, su IA integrada ($10/mes add-on) es perfecta. Genera tareas, resúmenes de reuniones, páginas completas y gestiona toda tu productividad con IA.', tags: ['$10/mes', 'Todo en Notion', 'Gestión proyectos', 'Notas inteligentes'], url: 'https://notion.so/product/ai' },
+        medio: { name: 'Microsoft Copilot 365', desc: 'Si trabajas con Office, Microsoft Copilot integrado en Word, Excel, PowerPoint y Outlook es una revolución de productividad. Genera presentaciones, analiza hojas de cálculo y redacta emails automáticamente.', tags: ['$30/mes', 'Office 365', 'Word + Excel + PPT', 'Outlook'], url: 'https://copilot.microsoft.com' },
+        alto: { name: 'MS Copilot + Claude Pro', desc: 'Microsoft Copilot para el ecosistema Office y Claude Pro para análisis profundo, redacción avanzada y consultas estratégicas. El stack definitivo para ejecutivos y consultores.', tags: ['Stack ejecutivo', 'Office + IA avanzada', 'Máxima productividad'], url: 'https://copilot.microsoft.com' }
+      }
+    };
+
+    function getRecommendation() {
+      const uso = answers[0] || 'escritura';
+      const presupuesto = answers[2] || 'gratis';
+      const idioma = answers[3] || 'español';
+
+      let rec = recommendations[uso];
+      if (!rec) rec = recommendations['escritura'];
+
+      let result;
+      if (typeof rec[presupuesto] === 'object' && rec[presupuesto].español !== undefined) {
+        result = idioma === 'español' ? rec[presupuesto].español : rec[presupuesto].default;
+      } else if (rec[presupuesto]) {
+        result = rec[presupuesto];
+      } else {
+        result = rec['gratis'] || Object.values(rec)[0];
+        if (result && result.español) result = result.español;
+      }
+      return result;
+    }
+
+    document.querySelectorAll('.quiz-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const step = opt.closest('.quiz-step');
+        step.querySelectorAll('.quiz-opt').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        answers[currentStep] = opt.dataset.val;
+
+        setTimeout(() => {
+          if (currentStep < steps.length - 1) {
+            steps[currentStep].classList.remove('active');
+            currentStep++;
+            steps[currentStep].classList.add('active');
+            dots[currentStep].classList.add('done');
+          } else {
+            // Show result
+            steps.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.add('done'));
+            const rec = getRecommendation();
+            document.getElementById('resultName').textContent = rec.name;
+            document.getElementById('resultDesc').textContent = rec.desc;
+            document.getElementById('resultCta').href = rec.url;
+            document.getElementById('resultCta').textContent = 'Probar ' + rec.name + ' →';
+            const tagsEl = document.getElementById('resultTags');
+            tagsEl.innerHTML = rec.tags.map(t => `<span class="result-tag">${t}</span>`).join('');
+            quizResult.classList.add('show');
+          }
+        }, 300);
+      });
+    });
+
+    document.getElementById('quizReset').addEventListener('click', () => {
+      answers = {};
+      currentStep = 0;
+      steps.forEach(s => s.classList.remove('active'));
+      steps[0].classList.add('active');
+      dots.forEach((d, i) => { if (i > 0) d.classList.remove('done'); });
+      document.querySelectorAll('.quiz-opt').forEach(o => o.classList.remove('selected'));
+      quizResult.classList.remove('show');
+    });
+
+    // --- Intersection Observer para fade-up ---
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.ai-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(24px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+  </script>
+
+</body>
+</html>
